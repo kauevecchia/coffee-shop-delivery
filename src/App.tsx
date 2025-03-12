@@ -1,12 +1,10 @@
-import { Header } from "./components/Header";
+import { BrowserRouter } from "react-router-dom"
+import { Router } from "./Router"
 
 export function App() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      <main>
-
-      </main>
-    </div>
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
   )
 }
