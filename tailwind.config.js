@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        baloo: ["Baloo 2", "sans-serif"],
+        baloo: ['"Baloo 2"', "sans-serif"],
         roboto: ["Roboto", "sans-serif"]
       },
       colors: {
