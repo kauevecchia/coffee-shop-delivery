@@ -3,7 +3,7 @@ import { MapPin, ShoppingCart } from '@phosphor-icons/react'
 
 export function Header() {
     return (
-        <header className='flex justify-between items-center py-8 w-full'>
+        <header className='flex justify-between items-center p-8 w-full'>
             <div className='max-w-7xl w-full mx-auto flex items-center justify-between'>
                 <img src={Logo} alt="" className='cursor pointer'/>
 
