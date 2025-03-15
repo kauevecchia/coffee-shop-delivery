@@ -16,3 +16,14 @@ import Macchiato from '../assets/Macchiato.svg'
 import Mochaccino from '../assets/v.svg'
 import TraditionalExpresso from '../assets/TraditionalExpresso.svg'
 
+
+interface Coffee {
+    id: number
+    name: string
+    features: string[]
+    image: string
+    description: string
+    quantity: number
+    price: number
+}
+
