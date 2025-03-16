@@ -27,3 +27,36 @@ interface Coffee {
     price: number
 }
 
+interface CoffeeStore {
+    coffees: Coffee[]
+    incrementCoffeeQuantity: (coffeeId: number, coffeeQuantity: number) => void
+    decrementCoffeeQuantity: (coffeeId: number, coffeeQuantity: number) => void
+    coffeesInCart: () => Coffee[]
+    clearCart: () => void
+}
+
+export const useCoffeeStore = create<CoffeeStore>((set) => ({
+    coffees: [],
+
+    incrementCoffeeQuantity: (coffeeId: number) => set((state) => ({
+        coffees: state.coffees.map((coffee) => 
+            coffee.id === coffeeId ?
+                { ...coffee, quantity: coffee.quantity + 1 }
+                : coffee
+        )
+    })),
+
+    decrementCoffeeQuantity: (coffeeId: number) => set((state) => ({
+        coffees: state.coffees.map((coffee) => 
+            coffee.id === coffeeId ?
+                { ...coffee, quantity: coffee.quantity > 0 ? coffee.quantity - 1 : 0 }
+                : coffee
+        )
+    })),
+
+    coffeesInCart: (): Coffee[] => {
+        return useCoffeeStore.getState().coffees.filter((coffee) => coffee.quantity > 0);
+    },
+
+    clearCart: () => set({ coffees: [] })
+}));
