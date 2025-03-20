@@ -92,15 +92,15 @@ export function Checkout() {
             </div>
           </div>
           <div className="flex gap-3">
-            <button className="flex gap-3 bg-base-button p-4 rounded-md">
+            <button className="flex gap-3 bg-base-button p-4 rounded-md flex-1">
               <CreditCard size={16} className="text-my-purple" />
               <span>CARTÃO DE CRÉDITO</span>
             </button>
-            <button className="flex gap-3 bg-base-button p-4 rounded-md">
+            <button className="flex gap-3 bg-base-button p-4 rounded-md flex-1">
               <Bank size={16} className="text-my-purple" />
               <span>CARTÃO DE DÉBITO</span>
             </button>
-            <button className="flex gap-3 bg-base-button p-4 rounded-md">
+            <button className="flex gap-3 bg-base-button p-4 rounded-md flex-1">
               <Money size={16} className="text-my-purple" />
               <span>DINHEIRO</span>
             </button>
