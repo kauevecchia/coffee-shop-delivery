@@ -5,10 +5,15 @@ import {
   Money,
   CreditCard,
 } from '@phosphor-icons/react'
+import { CartItems } from '../components/cartItems'
+import { useCoffeeStore } from '../store/coffeeStore'
 
 export function Checkout() {
+  const { coffeesInCart } = useCoffeeStore()
+  const cartItems = coffeesInCart()
+
   return (
-    <div className="max-w-7xl flex justify-center gap-8">
+    <div className="flex justify-center gap-8">
       <div className="flex flex-col gap-4">
         <h3 className="font-baloo font-bold text-lg">
           Complete seu pedido
@@ -112,9 +117,13 @@ export function Checkout() {
         <h3 className="font-baloo font-bold text-lg mb-4">
           Cafés selecionados
         </h3>
-        <div className="bg-base-card p-10 flex flex-col gap-8 rounded-tr-3xl rounded-bl-3xl rounded-tl-md rounded-br-md w-96">
+        <div className="bg-base-card p-10 flex flex-col gap-8 rounded-tr-3xl rounded-bl-3xl rounded-tl-md rounded-br-md w-full">
           <div>
-            <div></div>
+            <div>
+              {cartItems.map((coffee) => (
+                <CartItems coffee={coffee} />
+              ))}
+            </div>
             <div>
               <span>
                 Total de itens <span></span>
