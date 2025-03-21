@@ -7,8 +7,15 @@ import {
 } from '@phosphor-icons/react'
 import { CartItems } from '../components/CartItems'
 import { useCoffeeStore } from '../store/coffeeStore'
+import { useState } from 'react'
 
 export function Checkout() {
+  const [selectedPayment, setSelectedPayment] = useState("")
+
+  const handlePaymentChange = (method: string) => {
+    setSelectedPayment(method)
+  }
+
   const { coffeesInCart } = useCoffeeStore()
   const cartItems = coffeesInCart()
 
@@ -99,18 +106,62 @@ export function Checkout() {
             </div>
           </div>
           <div className="flex gap-3">
-            <button className="flex gap-3 items-center bg-base-button p-4 rounded-md flex-1 hover:bg-base-hover">
-              <CreditCard size={16} className="text-my-purple" />
-              <span>CARTÃO DE CRÉDITO</span>
-            </button>
-            <button className="flex gap-3 items-center bg-base-button p-4 rounded-md flex-1 hover:bg-base-hover">
-              <Bank size={16} className="text-my-purple" />
-              <span>CARTÃO DE DÉBITO</span>
-            </button>
-            <button className="flex gap-3 items-center bg-base-button p-4 rounded-md flex-1 hover:bg-base-hover">
-              <Money size={16} className="text-my-purple" />
-              <span>DINHEIRO</span>
-            </button>
+            <label>
+              <input
+                type="checkbox"
+                checked={selectedPayment === 'credit'}
+                onChange={() => handlePaymentChange('credit')}
+                className="hidden"
+              />
+              <div
+                className={`flex gap-3 items-center bg-base-button p-4 rounded-md flex-1 border hover:bg-base-hover cursor-pointer ${
+                  selectedPayment === 'credit'
+                    ? 'border-my-purple bg-purple-light'
+                    : 'bg-base-button border-transparent'
+                }`}
+              >
+                <CreditCard size={16} className="text-my-purple" />
+                <span>CARTÃO DE CRÉDITO</span>
+              </div>
+            </label>
+
+            <label>
+              <input
+                type="checkbox"
+                checked={selectedPayment === 'debit'}
+                onChange={() => handlePaymentChange('debit')}
+                className="hidden"
+              />
+              <div
+                className={`flex gap-3 items-center bg-base-button p-4 rounded-md flex-1 border hover:bg-base-hover cursor-pointer ${
+                  selectedPayment === 'debit'
+                    ? 'border-my-purple bg-purple-light'
+                    : 'bg-base-button border-transparent'
+                }`}
+              >
+                <Bank size={16} className="text-my-purple" />
+                <span>CARTÃO DE DÉBITO</span>
+              </div>
+            </label>
+
+            <label>
+              <input
+                type="checkbox"
+                checked={selectedPayment === 'money'}
+                onChange={() => handlePaymentChange('money')}
+                className="hidden"
+              />
+              <div
+                className={`flex gap-3 items-center bg-base-button p-4 rounded-md flex-1 border hover:bg-base-hover cursor-pointer ${
+                  selectedPayment === 'money'
+                    ? 'border-my-purple bg-purple-light'
+                    : 'bg-base-button border-transparent'
+                }`}
+              >
+                <Money size={16} className="text-my-purple" />
+                <span>DINHEIRO</span>
+              </div>
+            </label>
           </div>
         </div>
       </div>
