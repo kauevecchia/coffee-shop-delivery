@@ -99,15 +99,15 @@ export function Checkout() {
             </div>
           </div>
           <div className="flex gap-3">
-            <button className="flex gap-3 bg-base-button p-4 rounded-md flex-1">
+            <button className="flex gap-3 items-center bg-base-button p-4 rounded-md flex-1 hover:bg-base-hover">
               <CreditCard size={16} className="text-my-purple" />
               <span>CARTÃO DE CRÉDITO</span>
             </button>
-            <button className="flex gap-3 bg-base-button p-4 rounded-md flex-1">
+            <button className="flex gap-3 items-center bg-base-button p-4 rounded-md flex-1 hover:bg-base-hover">
               <Bank size={16} className="text-my-purple" />
               <span>CARTÃO DE DÉBITO</span>
             </button>
-            <button className="flex gap-3 bg-base-button p-4 rounded-md flex-1">
+            <button className="flex gap-3 items-center bg-base-button p-4 rounded-md flex-1 hover:bg-base-hover">
               <Money size={16} className="text-my-purple" />
               <span>DINHEIRO</span>
             </button>
@@ -148,7 +148,7 @@ export function Checkout() {
                 </span>
               </div>
             </div>
-            <button className="py-3 px-2 w-full rounded-md bg-my-yellow font-bold text-white">
+            <button className="py-3 px-2 w-full rounded-md bg-my-yellow font-bold text-white hover:bg-yellow-dark">
               CONFIRMAR PEDIDO
             </button>
           </div>
