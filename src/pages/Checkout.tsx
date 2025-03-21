@@ -5,19 +5,21 @@ import {
   Money,
   CreditCard,
 } from '@phosphor-icons/react'
-import { CartItems } from '../components/cartItems'
+import { CartItems } from '../components/CartItems'
 import { useCoffeeStore } from '../store/coffeeStore'
 
 export function Checkout() {
   const { coffeesInCart } = useCoffeeStore()
   const cartItems = coffeesInCart()
 
+  const totalItems = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
+  const deliveryFee = 3.5
+  const totalOrderPrice = totalItems + deliveryFee 
+
   return (
     <div className="flex justify-center gap-8">
       <div className="flex flex-col gap-4">
-        <h3 className="font-baloo font-bold text-lg">
-          Complete seu pedido
-        </h3>
+        <h3 className="font-baloo font-bold text-lg">Complete seu pedido</h3>
         <div className="bg-base-card p-10 flex flex-col gap-8 rounded-md">
           <div className="flex gap-2">
             <MapPinLine size={22} className="text-my-yellow" />
@@ -124,19 +126,30 @@ export function Checkout() {
                 <CartItems coffee={coffee} />
               ))}
             </div>
-            <div>
-              <span>
-                Total de itens <span></span>
-              </span>
-              <span>
-                Entrega <span></span>
-              </span>
-              <span>
-                Total <span></span>
-              </span>
+            <div className="flex flex-col gap-3 my-8">
+              <div className="flex justify-between">
+                <span className="text-sm text-base-text">Total de itens</span>
+                <span className="text-base-text">
+                  R${totalItems.toFixed(2)}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-sm text-base-text">Entrega</span>
+                <span className="text-base-text">
+                  R${deliveryFee.toFixed(2)}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-xl font-bold text-base-subtitle">
+                  Total
+                </span>
+                <span className="text-xl font-bold text-base-subtitle">
+                  R${totalOrderPrice.toFixed(2)}
+                </span>
+              </div>
             </div>
-            <button className='py-3 px-2 w-full rounded-md bg-my-yellow font-bold text-white'>
-                CONFIRMAR PEDIDO
+            <button className="py-3 px-2 w-full rounded-md bg-my-yellow font-bold text-white">
+              CONFIRMAR PEDIDO
             </button>
           </div>
         </div>
