@@ -8,9 +8,28 @@ import {
 import { CartItems } from '../components/CartItems'
 import { useCoffeeStore } from '../store/coffeeStore'
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as zod from 'zod'
+
+const checkoutFormValidationSchema = zod.object({
+  CEP: zod.string().regex(/^\d{5}-\d{3}$/, 'Formato de CEP inválido, use "00000-000"'),
+  Rua: zod.string().min(1, "Insira um nome de rua válido."),
+  Número: zod.number().min(1, "Insira um número válido."),
+  Complemento: zod.string().optional(),
+  Bairro: zod.string().min(1, "Insira um nome de bairro válido."),
+  Cidade: zod.string().min(1, "Insira um nome de cidade válido"),
+  UF: zod.number().min(1, "Insira um UF válido.").max(2, "Insira um UF válido.")
+})
 
 export function Checkout() {
   const [selectedPayment, setSelectedPayment] = useState("")
+
+  type CheckoutFormData = zod.infer<typeof checkoutFormValidationSchema>
+  const { register, handleSubmit, formState: { errors } } = useForm<CheckoutFormData>({
+    resolver: zodResolver(checkoutFormValidationSchema)
+  })
+  
 
   const handlePaymentChange = (method: string) => {
     setSelectedPayment(method)
@@ -41,55 +60,55 @@ export function Checkout() {
             <form className="flex flex-col gap-y-4">
               <input
                 type="number"
-                name=""
-                id=""
+                id="CEP"
                 placeholder="CEP"
                 className="bg-base-input rounded-md p-4 border border-base-button w-1/3 appearance-none"
+                {...register("CEP")}
               />
               <input
                 type="text"
-                name=""
-                id=""
+                id="Rua"
                 placeholder="Rua"
-                className="bg-base-input rounded-md p-4 border border-base-buttonflex-grow"
+                className="bg-base-input rounded-md p-4 border border-base-button flex-grow"
+                {...register("Rua")}
               />
               <div className="flex gap-3">
                 <input
                   type="number"
-                  name=""
-                  id=""
+                  id="Número"
                   placeholder="Número"
                   className="bg-base-input rounded-md p-4 border border-base-button appearance-none"
+                  {...register("Número")}
                 />
                 <input
                   type="text"
-                  name=""
-                  id=""
+                  id="Complemento"
                   placeholder="Complemento (opcional)"
                   className="bg-base-input rounded-md p-4 border border-base-button flex-grow"
+                  {...register("Complemento")}
                 />
               </div>
               <div className="flex gap-3">
                 <input
                   type="text"
-                  name=""
-                  id=""
+                  id="Bairro"
                   placeholder="Bairro"
                   className="bg-base-input rounded-md p-4 border border-base-button"
+                  {...register("Bairro")}
                 />
                 <input
                   type="text"
-                  name=""
-                  id=""
+                  id="Cidade"
                   placeholder="Cidade"
                   className="bg-base-input rounded-md p-4 border border-base-button"
+                  {...register("Cidade")}
                 />
                 <input
                   type="text"
-                  name=""
-                  id=""
+                  id="UF"
                   placeholder="UF"
                   className="bg-base-input rounded-md p-4 border border-base-button"
+                  {...register("UF")}
                 />
               </div>
             </form>
