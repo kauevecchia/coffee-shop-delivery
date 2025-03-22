@@ -7,6 +7,7 @@ interface CoffeeStore {
   incrementCoffeeQuantity: (coffeeId: number) => void
   decrementCoffeeQuantity: (coffeeId: number) => void
   coffeesInCart: () => Coffee[]
+  removeCoffee: (coffeeId: number) => void
   clearCart: () => void
 }
 
@@ -36,6 +37,15 @@ export const useCoffeeStore = create<CoffeeStore>()(
         })),
       coffeesInCart: () => {
         return get().coffees.filter((coffee) => coffee.quantity > 0)
+      },
+      removeCoffee: (coffeeId: number) => {
+        set((state) => ({
+          coffees: state.coffees.map((coffee) => 
+            coffee.id === coffeeId ?
+              { ...coffee, quantity: 0 } :
+              coffee
+          )
+        }))
       },
       clearCart: () =>
         set((state) => ({
