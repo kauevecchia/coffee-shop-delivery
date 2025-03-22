@@ -11,6 +11,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
+import { useNavigate } from 'react-router-dom'
 
 const checkoutFormValidationSchema = zod.object({
   CEP: zod.string().regex(/^\d{5}-\d{3}$/, 'Formato de CEP inválido, use "00000-000"'),
@@ -29,7 +30,12 @@ export function Checkout() {
   const { register, handleSubmit, formState: { errors } } = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutFormValidationSchema)
   })
+
+  const navigate = useNavigate()
   
+  const onSubmit = () => {
+    navigate("/success")
+  }
 
   const handlePaymentChange = (method: string) => {
     setSelectedPayment(method)
@@ -57,7 +63,7 @@ export function Checkout() {
             </div>
           </div>
           <div>
-            <form className="flex flex-col gap-y-4">
+            <form className="flex flex-col gap-y-4" onSubmit={handleSubmit(onSubmit)}>
               <input
                 type="number"
                 id="CEP"
