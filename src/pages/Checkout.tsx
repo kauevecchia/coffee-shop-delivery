@@ -26,6 +26,8 @@ const checkoutFormValidationSchema = zod.object({
 })
 
 export function Checkout() {
+  const [hasPaymentError, setHasPaymentError] = useState(false)
+
   type CheckoutFormData = zod.infer<typeof checkoutFormValidationSchema>
   const { register, handleSubmit, formState: { errors } } = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutFormValidationSchema)
@@ -35,6 +37,11 @@ export function Checkout() {
   const navigate = useNavigate()
 
   const onSubmit = () => {
+    if (paymentMethod === null) {
+      setHasPaymentError(true)
+      return
+    }
+
     navigate("/success")
   }
 
@@ -64,9 +71,7 @@ export function Checkout() {
             </div>
           </div>
           <div>
-            <form
-              className="flex flex-col gap-y-4"
-            >
+            <form className="flex flex-col gap-y-4">
               <div>
                 <input
                   type="text"
@@ -75,9 +80,11 @@ export function Checkout() {
                   className="bg-base-input rounded-md p-4 border border-base-button w-1/3"
                   {...register('CEP')}
                 />
-                {errors.CEP && <p className='text-xs text-red-500'>{errors.CEP.message}</p>}
+                {errors.CEP && (
+                  <p className="text-xs text-red-500">{errors.CEP.message}</p>
+                )}
               </div>
-              <div className='flex-grow'>
+              <div className="flex-grow">
                 <input
                   type="text"
                   id="Rua"
@@ -85,7 +92,9 @@ export function Checkout() {
                   className="bg-base-input rounded-md p-4 border border-base-button w-full"
                   {...register('Rua')}
                 />
-                {errors.Rua && <p className='text-xs text-red-500'>{errors.Rua.message}</p>}
+                {errors.Rua && (
+                  <p className="text-xs text-red-500">{errors.Rua.message}</p>
+                )}
               </div>
               <div className="flex gap-3">
                 <div>
@@ -96,9 +105,13 @@ export function Checkout() {
                     className="bg-base-input rounded-md p-4 border border-base-button"
                     {...register('Número')}
                   />
-                  {errors.Número && <p className='text-xs text-red-500'>{errors.Número.message}</p>}
+                  {errors.Número && (
+                    <p className="text-xs text-red-500">
+                      {errors.Número.message}
+                    </p>
+                  )}
                 </div>
-                <div className='flex-grow'>
+                <div className="flex-grow">
                   <input
                     type="text"
                     id="Complemento"
@@ -106,7 +119,11 @@ export function Checkout() {
                     className="bg-base-input rounded-md p-4 border border-base-button w-full"
                     {...register('Complemento')}
                   />
-                  {errors.Complemento && <p className='text-xs text-red-500'>{errors.Complemento.message}</p>}
+                  {errors.Complemento && (
+                    <p className="text-xs text-red-500">
+                      {errors.Complemento.message}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="flex gap-3">
@@ -118,7 +135,11 @@ export function Checkout() {
                     className="bg-base-input rounded-md p-4 border border-base-button"
                     {...register('Bairro')}
                   />
-                  {errors.Bairro && <p className='text-xs text-red-500'>{errors.Bairro.message}</p>}
+                  {errors.Bairro && (
+                    <p className="text-xs text-red-500">
+                      {errors.Bairro.message}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <input
@@ -128,7 +149,11 @@ export function Checkout() {
                     className="bg-base-input rounded-md p-4 border border-base-button"
                     {...register('Cidade')}
                   />
-                  {errors.Cidade && <p className='text-xs text-red-500'>{errors.Cidade.message}</p>}
+                  {errors.Cidade && (
+                    <p className="text-xs text-red-500">
+                      {errors.Cidade.message}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <input
@@ -138,7 +163,9 @@ export function Checkout() {
                     className="bg-base-input rounded-md p-4 border border-base-button"
                     {...register('UF')}
                   />
-                  {errors.UF && <p className='text-xs text-red-500'>{errors.UF.message}</p>}
+                  {errors.UF && (
+                    <p className="text-xs text-red-500">{errors.UF.message}</p>
+                  )}
                 </div>
               </div>
             </form>
@@ -153,6 +180,11 @@ export function Checkout() {
                 O pagamento é feito na entrega. Escolha a forma que deseja pagar
               </p>
             </div>
+            {hasPaymentError && (
+              <p className="text-xs text-red-500">
+                Selecione uma forma de pagamento antes de continuar.
+              </p>
+            )}
           </div>
           <div className="flex gap-3">
             <label>
@@ -242,7 +274,10 @@ export function Checkout() {
                 </span>
               </div>
             </div>
-            <button className="py-3 px-2 w-full rounded-md bg-my-yellow font-bold text-white hover:bg-yellow-dark">
+            <button
+              className="py-3 px-2 w-full rounded-md bg-my-yellow font-bold text-white hover:bg-yellow-dark"
+              onClick={handleSubmit(onSubmit)}
+            >
               CONFIRMAR PEDIDO
             </button>
           </div>
