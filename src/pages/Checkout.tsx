@@ -32,7 +32,7 @@ export function Checkout() {
   })
 
   const navigate = useNavigate()
-  
+
   const onSubmit = () => {
     navigate("/success")
   }
@@ -63,59 +63,82 @@ export function Checkout() {
             </div>
           </div>
           <div>
-            <form className="flex flex-col gap-y-4" onSubmit={handleSubmit(onSubmit)}>
-              <input
-                type="number"
-                id="CEP"
-                placeholder="CEP"
-                className="bg-base-input rounded-md p-4 border border-base-button w-1/3 appearance-none"
-                {...register("CEP")}
-              />
-              <input
-                type="text"
-                id="Rua"
-                placeholder="Rua"
-                className="bg-base-input rounded-md p-4 border border-base-button flex-grow"
-                {...register("Rua")}
-              />
-              <div className="flex gap-3">
-                <input
-                  type="number"
-                  id="Número"
-                  placeholder="Número"
-                  className="bg-base-input rounded-md p-4 border border-base-button appearance-none"
-                  {...register("Número")}
-                />
+            <form
+              className="flex flex-col gap-y-4"
+            >
+              <div>
                 <input
                   type="text"
-                  id="Complemento"
-                  placeholder="Complemento (opcional)"
-                  className="bg-base-input rounded-md p-4 border border-base-button flex-grow"
-                  {...register("Complemento")}
+                  id="CEP"
+                  placeholder="CEP"
+                  className="bg-base-input rounded-md p-4 border border-base-button w-1/3"
+                  {...register('CEP')}
                 />
+                {errors.CEP && <p className='text-xs text-red-500'>{errors.CEP.message}</p>}
+              </div>
+              <div className='flex-grow'>
+                <input
+                  type="text"
+                  id="Rua"
+                  placeholder="Rua"
+                  className="bg-base-input rounded-md p-4 border border-base-button w-full"
+                  {...register('Rua')}
+                />
+                {errors.Rua && <p className='text-xs text-red-500'>{errors.Rua.message}</p>}
               </div>
               <div className="flex gap-3">
-                <input
-                  type="text"
-                  id="Bairro"
-                  placeholder="Bairro"
-                  className="bg-base-input rounded-md p-4 border border-base-button"
-                  {...register("Bairro")}
-                />
-                <input
-                  type="text"
-                  id="Cidade"
-                  placeholder="Cidade"
-                  className="bg-base-input rounded-md p-4 border border-base-button"
-                  {...register("Cidade")}
-                />
-                <input
-                  type="text"
-                  id="UF"
-                  placeholder="UF"
-                  className="bg-base-input rounded-md p-4 border border-base-button"
-                  {...register("UF")}
-                />
+                <div>
+                  <input
+                    type="text"
+                    id="Número"
+                    placeholder="Número"
+                    className="bg-base-input rounded-md p-4 border border-base-button"
+                    {...register('Número')}
+                  />
+                  {errors.Número && <p className='text-xs text-red-500'>{errors.Número.message}</p>}
+                </div>
+                <div className='flex-grow'>
+                  <input
+                    type="text"
+                    id="Complemento"
+                    placeholder="Complemento (opcional)"
+                    className="bg-base-input rounded-md p-4 border border-base-button w-full"
+                    {...register('Complemento')}
+                  />
+                  {errors.Complemento && <p className='text-xs text-red-500'>{errors.Complemento.message}</p>}
+                </div>
+              </div>
+              <div className="flex gap-3">
+                <div>
+                  <input
+                    type="text"
+                    id="Bairro"
+                    placeholder="Bairro"
+                    className="bg-base-input rounded-md p-4 border border-base-button"
+                    {...register('Bairro')}
+                  />
+                  {errors.Bairro && <p className='text-xs text-red-500'>{errors.Bairro.message}</p>}
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    id="Cidade"
+                    placeholder="Cidade"
+                    className="bg-base-input rounded-md p-4 border border-base-button"
+                    {...register('Cidade')}
+                  />
+                  {errors.Cidade && <p className='text-xs text-red-500'>{errors.Cidade.message}</p>}
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    id="UF"
+                    placeholder="UF"
+                    className="bg-base-input rounded-md p-4 border border-base-button"
+                    {...register('UF')}
+                  />
+                  {errors.UF && <p className='text-xs text-red-500'>{errors.UF.message}</p>}
+                </div>
               </div>
             </form>
           </div>
