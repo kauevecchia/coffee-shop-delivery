@@ -12,6 +12,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
 import { useNavigate } from 'react-router-dom'
+import { useCheckoutStore } from '../store/checkoutStore'
+import { PaymentMethods } from '../store/checkoutStore'
 
 const checkoutFormValidationSchema = zod.object({
   CEP: zod.string().regex(/^\d{5}-\d{3}$/, 'Formato de CEP inválido, use "00000-000"'),
@@ -24,12 +26,11 @@ const checkoutFormValidationSchema = zod.object({
 })
 
 export function Checkout() {
-  const [selectedPayment, setSelectedPayment] = useState("")
-
   type CheckoutFormData = zod.infer<typeof checkoutFormValidationSchema>
   const { register, handleSubmit, formState: { errors } } = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutFormValidationSchema)
   })
+  const { setPaymentMethod, paymentMethod } = useCheckoutStore()
 
   const navigate = useNavigate()
 
@@ -37,8 +38,8 @@ export function Checkout() {
     navigate("/success")
   }
 
-  const handlePaymentChange = (method: string) => {
-    setSelectedPayment(method)
+  const handlePaymentChange = (method: PaymentMethods) => {
+    setPaymentMethod(method)
   }
 
   const { coffeesInCart } = useCoffeeStore()
@@ -155,15 +156,13 @@ export function Checkout() {
           </div>
           <div className="flex gap-3">
             <label>
-              <input
-                type="checkbox"
-                checked={selectedPayment === 'credit'}
-                onChange={() => handlePaymentChange('credit')}
+              <button
+                onClick={() => handlePaymentChange('Cartão de Crédito')}
                 className="hidden"
               />
               <div
                 className={`flex gap-3 items-center bg-base-button p-4 rounded-md flex-1 border hover:bg-base-hover cursor-pointer ${
-                  selectedPayment === 'credit'
+                  paymentMethod === 'Cartão de Crédito'
                     ? 'border-my-purple bg-purple-light'
                     : 'bg-base-button border-transparent'
                 }`}
@@ -174,15 +173,13 @@ export function Checkout() {
             </label>
 
             <label>
-              <input
-                type="checkbox"
-                checked={selectedPayment === 'debit'}
-                onChange={() => handlePaymentChange('debit')}
+              <button
+                onClick={() => handlePaymentChange('Cartão de Débito')}
                 className="hidden"
               />
               <div
                 className={`flex gap-3 items-center bg-base-button p-4 rounded-md flex-1 border hover:bg-base-hover cursor-pointer ${
-                  selectedPayment === 'debit'
+                  paymentMethod === 'Cartão de Débito'
                     ? 'border-my-purple bg-purple-light'
                     : 'bg-base-button border-transparent'
                 }`}
@@ -193,15 +190,13 @@ export function Checkout() {
             </label>
 
             <label>
-              <input
-                type="checkbox"
-                checked={selectedPayment === 'money'}
-                onChange={() => handlePaymentChange('money')}
+              <button
+                onClick={() => handlePaymentChange('Dinheiro')}
                 className="hidden"
               />
               <div
                 className={`flex gap-3 items-center bg-base-button p-4 rounded-md flex-1 border hover:bg-base-hover cursor-pointer ${
-                  selectedPayment === 'money'
+                  paymentMethod === 'Dinheiro'
                     ? 'border-my-purple bg-purple-light'
                     : 'bg-base-button border-transparent'
                 }`}
