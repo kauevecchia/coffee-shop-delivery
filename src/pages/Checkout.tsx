@@ -17,12 +17,12 @@ import { PaymentMethods } from '../store/checkoutStore'
 
 const checkoutFormValidationSchema = zod.object({
   CEP: zod.string().regex(/^\d{5}-\d{3}$/, 'Formato de CEP inválido, use "00000-000"'),
-  Rua: zod.string().min(1, "Insira um nome de rua válido."),
-  Número: zod.number().min(1, "Insira um número válido."),
+  Rua: zod.string().min(1, "Insira um nome de rua válido"),
+  Número: zod.number( {invalid_type_error: 'Digite um número'}).positive("Insira um número válido"),
   Complemento: zod.string().optional(),
   Bairro: zod.string().min(1, "Insira um nome de bairro válido."),
   Cidade: zod.string().min(1, "Insira um nome de cidade válido"),
-  UF: zod.number().min(1, "Insira um UF válido.").max(2, "Insira um UF válido.")
+  UF: zod.string().min(1, "Insira um UF válido").max(2, "Insira um UF válido")
 })
 
 export function Checkout() {
@@ -32,16 +32,18 @@ export function Checkout() {
   const { register, handleSubmit, formState: { errors } } = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutFormValidationSchema)
   })
-  const { setPaymentMethod, paymentMethod } = useCheckoutStore()
+  const { setPaymentMethod, paymentMethod, setFormData } = useCheckoutStore()
 
   const navigate = useNavigate()
 
-  const onSubmit = () => {
+  const onSubmit = (data: CheckoutFormData) => {
+    console.log(paymentMethod)
     if (paymentMethod === null) {
       setHasPaymentError(true)
       return
     }
 
+    setFormData(data)
     navigate("/success")
   }
 
@@ -72,7 +74,7 @@ export function Checkout() {
           </div>
           <div>
             <form className="flex flex-col gap-y-4">
-              <div>
+              <div className="flex flex-col gap-1">
                 <input
                   type="text"
                   id="CEP"
@@ -84,7 +86,7 @@ export function Checkout() {
                   <p className="text-xs text-red-500">{errors.CEP.message}</p>
                 )}
               </div>
-              <div className="flex-grow">
+              <div className="flex flex-col gap-1 flex-grow">
                 <input
                   type="text"
                   id="Rua"
@@ -97,13 +99,13 @@ export function Checkout() {
                 )}
               </div>
               <div className="flex gap-3">
-                <div>
+                <div className="flex flex-col gap-1">
                   <input
                     type="text"
                     id="Número"
                     placeholder="Número"
                     className="bg-base-input rounded-md p-4 border border-base-button"
-                    {...register('Número')}
+                    {...register('Número', { valueAsNumber: true })}
                   />
                   {errors.Número && (
                     <p className="text-xs text-red-500">
@@ -111,7 +113,7 @@ export function Checkout() {
                     </p>
                   )}
                 </div>
-                <div className="flex-grow">
+                <div className="flex flex-col gap-1 flex-grow">
                   <input
                     type="text"
                     id="Complemento"
@@ -127,7 +129,7 @@ export function Checkout() {
                 </div>
               </div>
               <div className="flex gap-3">
-                <div>
+                <div className="flex flex-col gap-1">
                   <input
                     type="text"
                     id="Bairro"
@@ -141,7 +143,7 @@ export function Checkout() {
                     </p>
                   )}
                 </div>
-                <div>
+                <div className="flex flex-col gap-1">
                   <input
                     type="text"
                     id="Cidade"
@@ -155,7 +157,7 @@ export function Checkout() {
                     </p>
                   )}
                 </div>
-                <div>
+                <div className="flex flex-col gap-1">
                   <input
                     type="text"
                     id="UF"
@@ -179,12 +181,14 @@ export function Checkout() {
               <p className="text-base-text text-sm">
                 O pagamento é feito na entrega. Escolha a forma que deseja pagar
               </p>
+              <div>
+                {hasPaymentError && (
+                  <p className="text-xs text-red-500">
+                    Selecione uma forma de pagamento antes de continuar.
+                  </p>
+                )}
+              </div> 
             </div>
-            {hasPaymentError && (
-              <p className="text-xs text-red-500">
-                Selecione uma forma de pagamento antes de continuar.
-              </p>
-            )}
           </div>
           <div className="flex gap-3">
             <label>
