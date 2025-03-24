@@ -2,10 +2,22 @@ import { useCheckoutStore } from "../store/checkoutStore"
 import SuccessImg from '../../public/Illustration.svg'
 import { MapPin, Timer, CurrencyDollar } from '@phosphor-icons/react'
 import { useCoffeeStore } from "../store/coffeeStore"
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 export function Success() {
     const { formData, paymentMethod } = useCheckoutStore()
+    const { clearCart } = useCoffeeStore()
 
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!formData) {
+            navigate("/checkout")
+        }
+
+        clearCart()
+    }, [clearCart, navigate, formData])
 
     return (
       <div className="w-full p-8">
@@ -18,7 +30,6 @@ export function Success() {
           </p>
 
           <div className="flex justify-between items-center mt-10">
-            {/* Div de conteúdo */}
             <div className="flex-1 mb-6 max-w-lg rounded-br-md rounded-tl-md rounded-bl-3xl rounded-tr-3xl bg-gradient-to-r from-my-yellow to-my-purple p-0.5">
               <div className="rounded-br-md flex flex-col gap-8 rounded-bl-3xl rounded-tl-md rounded-tr-3xl bg-white p-10">
                 <div className="flex gap-3 items-center">
@@ -62,7 +73,6 @@ export function Success() {
               </div>
             </div>
 
-            {/* Imagem */}
             <div className="flex-shrink-0">
               <img src={SuccessImg} alt="" />
             </div>
