@@ -54,6 +54,10 @@ export function Checkout() {
   const { coffeesInCart } = useCoffeeStore()
   const cartItems = coffeesInCart()
 
+  if (cartItems.length === 0) {
+    navigate('/')
+  }
+
   const totalItems = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
   const deliveryFee = 3.5
   const totalOrderPrice = totalItems + deliveryFee 
