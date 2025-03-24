@@ -40,11 +40,11 @@ export function Success() {
                     <p>
                       Entrega em{' '}
                       <span className="font-bold">
-                        Rua {formData.Rua}, {formData.Número}
+                        Rua {formData?.Rua}, {formData?.Número}
                       </span>
                     </p>
                     <p>
-                      {formData.Bairro} - {formData.Cidade} - {formData.UF}
+                      {formData?.Bairro} - {formData?.Cidade} - {formData?.UF}
                     </p>
                   </div>
                 </div>
