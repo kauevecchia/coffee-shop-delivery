@@ -29,8 +29,8 @@ export function Success() {
             Agora é só aguardar que logo o café chegará a você
           </p>
 
-          <div className="flex justify-between items-center mt-10">
-            <div className="flex-1 mb-6 max-w-lg rounded-br-md rounded-tl-md rounded-bl-3xl rounded-tr-3xl bg-gradient-to-r from-my-yellow to-my-purple p-0.5">
+          <div className="flex flex-col md:flex-row gap-4 justify-between items-center mt-10">
+            <div className="flex-1 w-full mb-6 max-w-lg rounded-br-md rounded-tl-md rounded-bl-3xl rounded-tr-3xl bg-gradient-to-r from-my-yellow to-my-purple p-0.5">
               <div className="rounded-br-md flex flex-col gap-8 rounded-bl-3xl rounded-tl-md rounded-tr-3xl bg-white p-10">
                 <div className="flex gap-3 items-center">
                   <div className="h-8 w-8 bg-my-purple rounded-full p-2">
