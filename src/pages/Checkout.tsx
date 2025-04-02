@@ -37,14 +37,13 @@ export function Checkout() {
   const navigate = useNavigate()
 
   const onSubmit = (data: CheckoutFormData) => {
-    console.log(paymentMethod)
-    if (paymentMethod === null) {
-      setHasPaymentError(true)
-      return
+    if (!paymentMethod) {
+      setHasPaymentError(true);
+      return;
     }
 
-    setFormData(data)
-    navigate("/success")
+    setFormData(data);
+    navigate("/success");
   }
 
   const handlePaymentChange = (method: PaymentMethods) => {
@@ -63,7 +62,7 @@ export function Checkout() {
   const totalOrderPrice = totalItems + deliveryFee 
 
   return (
-    <div className="flex justify-center gap-8">
+    <div className="flex flex-col md:flex-row w-80 md:w-auto justify-center gap-8">
       <div className="flex flex-col gap-4">
         <h3 className="font-baloo font-bold text-lg">Complete seu pedido</h3>
         <div className="bg-base-card p-10 flex flex-col gap-8 rounded-md">
@@ -83,8 +82,8 @@ export function Checkout() {
                   type="text"
                   id="CEP"
                   placeholder="CEP"
-                  className="bg-base-input rounded-md p-4 border border-base-button w-1/3"
-                  {...register('CEP')}
+                  className="bg-base-input rounded-md p-4 border border-base-button md:w-1/3"
+                  {...register("CEP")}
                 />
                 {errors.CEP && (
                   <p className="text-xs text-red-500">{errors.CEP.message}</p>
@@ -96,20 +95,20 @@ export function Checkout() {
                   id="Rua"
                   placeholder="Rua"
                   className="bg-base-input rounded-md p-4 border border-base-button w-full"
-                  {...register('Rua')}
+                  {...register("Rua")}
                 />
                 {errors.Rua && (
                   <p className="text-xs text-red-500">{errors.Rua.message}</p>
                 )}
               </div>
-              <div className="flex gap-3">
+              <div className="flex flex-col md:flex-row gap-3">
                 <div className="flex flex-col gap-1">
                   <input
                     type="text"
                     id="Número"
                     placeholder="Número"
                     className="bg-base-input rounded-md p-4 border border-base-button"
-                    {...register('Número', { valueAsNumber: true })}
+                    {...register("Número", { valueAsNumber: true })}
                   />
                   {errors.Número && (
                     <p className="text-xs text-red-500">
@@ -123,7 +122,7 @@ export function Checkout() {
                     id="Complemento"
                     placeholder="Complemento (opcional)"
                     className="bg-base-input rounded-md p-4 border border-base-button w-full"
-                    {...register('Complemento')}
+                    {...register("Complemento")}
                   />
                   {errors.Complemento && (
                     <p className="text-xs text-red-500">
@@ -132,14 +131,14 @@ export function Checkout() {
                   )}
                 </div>
               </div>
-              <div className="flex gap-3">
+              <div className="flex flex-col md:flex-row gap-3">
                 <div className="flex flex-col gap-1">
                   <input
                     type="text"
                     id="Bairro"
                     placeholder="Bairro"
                     className="bg-base-input rounded-md p-4 border border-base-button"
-                    {...register('Bairro')}
+                    {...register("Bairro")}
                   />
                   {errors.Bairro && (
                     <p className="text-xs text-red-500">
@@ -153,7 +152,7 @@ export function Checkout() {
                     id="Cidade"
                     placeholder="Cidade"
                     className="bg-base-input rounded-md p-4 border border-base-button"
-                    {...register('Cidade')}
+                    {...register("Cidade")}
                   />
                   {errors.Cidade && (
                     <p className="text-xs text-red-500">
@@ -167,7 +166,7 @@ export function Checkout() {
                     id="UF"
                     placeholder="UF"
                     className="bg-base-input rounded-md p-4 border border-base-button"
-                    {...register('UF')}
+                    {...register("UF")}
                   />
                   {errors.UF && (
                     <p className="text-xs text-red-500">{errors.UF.message}</p>
@@ -177,74 +176,70 @@ export function Checkout() {
             </form>
           </div>
         </div>
-        <div className="bg-base-card p-10 flex flex-col gap-8 rounded-md">
-          <div className="flex gap-2">
+        <div className="bg-base-card p-10 rounded-md">
+          <div className='flex gap-2'>
             <CurrencyDollar size={22} className="text-my-purple" />
-            <div>
-              <p className="text-base-subtitle">Pagamento</p>
-              <p className="text-base-text text-sm">
-                O pagamento é feito na entrega. Escolha a forma que deseja pagar
-              </p>
-              <div>
-                {hasPaymentError && (
-                  <p className="text-xs text-red-500">
-                    Selecione uma forma de pagamento antes de continuar.
-                  </p>
-                )}
-              </div> 
-            </div>
+            <p className="text-base-subtitle">Pagamento</p>
           </div>
-          <div className="flex gap-3">
-            <label>
-              <button
-                onClick={() => handlePaymentChange('Cartão de Crédito')}
-                className="hidden"
-              />
+          <p className="text-base-text text-sm mt-1 ml-8 md:ml-7">
+            O pagamento é feito na entrega. Escolha a forma que deseja pagar
+          </p>
+          
+          {hasPaymentError && (
+            <p className="ml-8 md:ml-7 mt-2 text-xs text-red-500">
+              Selecione uma forma de pagamento antes de continuar.
+            </p>
+          )}
+          
+          <div className="flex flex-col w-full mt-6 md:flex-row gap-3">
+            <button
+              onClick={() => handlePaymentChange("Cartão de Crédito")}
+              className="flex-1"
+            >
               <div
                 className={`flex gap-3 items-center bg-base-button p-4 rounded-md flex-1 border hover:bg-base-hover cursor-pointer ${
-                  paymentMethod === 'Cartão de Crédito'
-                    ? 'border-my-purple bg-purple-light'
-                    : 'bg-base-button border-transparent'
+                  paymentMethod === "Cartão de Crédito"
+                    ? "border-my-purple bg-purple-light"
+                    : "bg-base-button border-transparent"
                 }`}
               >
                 <CreditCard size={16} className="text-my-purple" />
-                <span>CARTÃO DE CRÉDITO</span>
+                <span className='text-sm'>CARTÃO DE CRÉDITO</span>
               </div>
-            </label>
-
-            <label>
-              <button
-                onClick={() => handlePaymentChange('Cartão de Débito')}
-                className="hidden"
-              />
+            </button>
+              
+            <button
+              onClick={() => handlePaymentChange("Cartão de Débito")}
+              className="flex-1"
+            >
               <div
                 className={`flex gap-3 items-center bg-base-button p-4 rounded-md flex-1 border hover:bg-base-hover cursor-pointer ${
-                  paymentMethod === 'Cartão de Débito'
-                    ? 'border-my-purple bg-purple-light'
-                    : 'bg-base-button border-transparent'
+                  paymentMethod === "Cartão de Débito"
+                    ? "border-my-purple bg-purple-light"
+                    : "bg-base-button border-transparent"
                 }`}
               >
                 <Bank size={16} className="text-my-purple" />
-                <span>CARTÃO DE DÉBITO</span>
+                <span className='text-sm'>CARTÃO DE DÉBITO</span>
               </div>
-            </label>
-
-            <label>
-              <button
-                onClick={() => handlePaymentChange('Dinheiro')}
-                className="hidden"
-              />
-              <div
-                className={`flex gap-3 items-center bg-base-button p-4 rounded-md flex-1 border hover:bg-base-hover cursor-pointer ${
-                  paymentMethod === 'Dinheiro'
-                    ? 'border-my-purple bg-purple-light'
-                    : 'bg-base-button border-transparent'
-                }`}
-              >
-                <Money size={16} className="text-my-purple" />
-                <span>DINHEIRO</span>
+            </button>
+              
+            <button
+              onClick={() => handlePaymentChange("Dinheiro")}
+              className="flex-1"
+            >
+            <div
+              className={`flex gap-3 items-center bg-base-button p-4 rounded-md flex-1 border hover:bg-base-hover cursor-pointer ${
+                paymentMethod === "Dinheiro"
+                  ? "border-my-purple bg-purple-light"
+                  : "bg-base-button border-transparent"
+              }`}
+            >
+              <Money size={16} className="text-my-purple" />
+              <span className='text-sm'>DINHEIRO</span>
               </div>
-            </label>
+            </button>
+            
           </div>
         </div>
       </div>
@@ -292,5 +287,5 @@ export function Checkout() {
         </div>
       </div>
     </div>
-  )
+  );
 }
