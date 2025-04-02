@@ -7,7 +7,7 @@ export function Home() {
     <main>
       <HeroSection />
 
-      <section className="mt-24 max-w-7xl mx-auto">
+      <section className="mt-24 max-w-7xl mx-auto flex flex-col items-center justify-center md:block">
         <h2 className="font-baloo font-extrabold text-2xl">Nossos cafés</h2>
         <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-10 mt-14">
           {coffees.map((coffee) => (

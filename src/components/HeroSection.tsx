@@ -5,7 +5,7 @@ export function HeroSection() {
     return (
         <div className='mx-10 flex flex-col justify-around md:mx-40 md:flex-row max-w-7xl'>
             <div className='md:w-144'>
-                <h1 className='font-baloo text-5xl font-extrabold' >Encontre o café perfeito para qualquer hora do dia</h1>
+                <h1 className='font-baloo text-3xl md:text-5xl font-extrabold' >Encontre o café perfeito para qualquer hora do dia</h1>
                 <p className='mt-4 text-base-subtitle'>Com o Coffee Delivery, você recebe seu café onde estiver, a qualquer hora</p>
                 <div className='mt-16 grid grid-cols-1 gap-8 text-base-text md:grid-cols-2 md:whitespace-nowrap'>
                     <div className='flex items-center gap-2'>
